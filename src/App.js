@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from 'react';
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './App.css';
 import Gallery from './components/Gallery';
 import SearchBar from './components/SearchBar';
@@ -40,20 +40,15 @@ function App() {
       <Router>
         <Routes>
           <Route path='/' element={
-              <Fragment>
+               <Fragment>
                   <SearchBar handleSearch={handleSearch} />
-                  <Gallery data={data}/>
-              </Fragment>
-          } ></Route>
-          <Route path='/album/:id' element={ <AlbumView/>}></Route>
-          <Route path='/artist/:id' element={ <ArtistView /> } ></Route>
+                  <Gallery data={data} />
+               </Fragment>
+          } />
+          <Route path='/album/:id' element={<AlbumView />}></Route>
+          <Route path='/artist/:id' element={<ArtistView />} ></Route>
         </Routes>
       </Router>
-      <SearchBar handleSearch={handleSearch} />
-      <Gallery data={data}/>
-      <AlbumView />
-      <ArtistView />
-
     </div>
   );
 }
