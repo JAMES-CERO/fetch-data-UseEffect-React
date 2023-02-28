@@ -3,44 +3,37 @@ import './App.css';
 import Gallery from './components/Gallery';
 import SearchBar from './components/SearchBar';
 import { createResource as fetchData } from './helper';
+import Spinner from './components/Spinner';
+
 function App() {
 
   let [searchTerm, setSearchTerm] = useState('')
   let [data, setData] = useState(null)
   let [message, setMessage] = useState('Search for Music')
 
-  const API_URL = 'https://itunes.apple.com/search?term='
-
-  const renderGallery = () => {
-    if(data){
-      return (
-        <Suspense fallback={<h1>Loading...</h1>} >
-          <Gallery data={data}/>
-        </Suspense>
-      )
-    }
-  }
+ 
 
   useEffect(() => {
     if (searchTerm) {
+      console.log(fetchData(searchTerm))
       setData(fetchData(searchTerm))
-      // const fetchData = async () => {
-      //   document.title = `${search} music`
-      //   const response = await fetch(API_URL + search)
-      //   const resData = await response.json()
-      //   if (resData.results.length > 0) {
-      //     setData(resData.results)
-      //   } else {
-      //     setMessage('Not found')
-      //   }
-      // }
-      // fetchData()
+
     }
   }, [searchTerm])
 
   const handleSearch = (e, term) => {
     e.preventDefault()
     setSearchTerm(term)
+  }
+
+  const renderGallery = () => {
+    if(data){
+      return (
+        <Suspense  fallback={<Spinner />} >
+          <Gallery data={data}/>
+        </Suspense>
+      )
+    }
   }
   return (
     <div className="App">

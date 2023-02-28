@@ -3,17 +3,17 @@ import GalleryItem from "./GalleryItem";
 
 const Gallery = (props) => {
 
-    const data = props.data.result.read()
+    const myData = props.data.result.read()
 
-    const display = props.data.map((item, i) => {
-        return(
+    const display = myData.map((item, i) => {
+        return (
             <GalleryItem item={item} key={i} />
         )
     })
     
     return(
         <div>
-            {display}
+            {display }
         </div>
     )
 }
