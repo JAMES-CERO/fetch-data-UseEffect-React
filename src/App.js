@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import './App.css';
 import Gallery from './components/Gallery';
 import SearchBar from './components/SearchBar';
@@ -36,7 +36,9 @@ function App() {
     <div className="App">
       <SearchBar handleSearch={handleSearch} />
       {message}
-      <Gallery data={data}/>
+      <Suspense fallback={<h1>Loading...</h1>} >
+        <Gallery data={data}/>
+      </Suspense>
 
     </div>
   );
