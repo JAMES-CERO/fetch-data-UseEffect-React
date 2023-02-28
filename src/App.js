@@ -11,6 +11,16 @@ function App() {
 
   const API_URL = 'https://itunes.apple.com/search?term='
 
+  const renderGallery = () => {
+    if(data){
+      return (
+        <Suspense fallback={<h1>Loading...</h1>} >
+          <Gallery data={data}/>
+        </Suspense>
+      )
+    }
+  }
+
   useEffect(() => {
     if (searchTerm) {
       setData(fetchData(searchTerm))
@@ -36,10 +46,7 @@ function App() {
     <div className="App">
       <SearchBar handleSearch={handleSearch} />
       {message}
-      <Suspense fallback={<h1>Loading...</h1>} >
-        <Gallery data={data}/>
-      </Suspense>
-
+      {renderGallery()}
     </div>
   );
 }
