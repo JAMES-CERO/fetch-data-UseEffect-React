@@ -1,54 +1,86 @@
-import { Fragment, useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+// import {  useEffect, useState } from 'react';
+// import './App.css';
+// import Gallery from './components/Gallery';
+// import SearchBar from './components/SearchBar';
+
+// function App() {
+
+//   let [searchTerm, setSearchTerm] = useState('')
+//   let [data, setData] = useState(null)
+//   let [message, setMessage] = useState('Search for Music')
+
+//   const API_URL = 'https://itunes.apple.com/search?term='
+
+//   useEffect(() => {
+//     if (searchTerm) {
+//       document.title = `${searchTerm} Music`
+//       const fetchData = async () => {
+//         const response = await fetch(API_URL + searchTerm)
+//         const resData = await response.json()
+//         if (resData.results.length > 0) {
+//           setData(resData.results)
+//         } else {
+//           setMessage('Not found')
+//         }
+//       }
+//       fetchData()
+//     }
+//   }, [searchTerm])
+
+//   const handleSearch = (e, term) => {
+//     e.preventDefault()
+//     setSearchTerm(term)
+//   }
+//   return (
+
+//     <div className="App">
+//       <SearchBar handleSearch={handleSearch} />
+//       {message}
+//       <Gallery data={data} />
+//     </div>
+//   );
+// }
+
+// export default App;
+
 import './App.css';
-import Gallery from './components/Gallery';
-import SearchBar from './components/SearchBar';
-import AlbumView from './components/AlbumView';
-import ArtistView from './components/ArtistView';
+import { useEffect, useState } from 'react'
+import Gallery from './components/Gallery'
+import SearchBar from './components/SearchBar'
 
 function App() {
-
-  let [search, setSearch] = useState('')
+  let [searchTerm, setSearchTerm] = useState('')
   let [data, setData] = useState([])
-  let [message, setMessage] = useState('Search for Music')
+  let [message, setMessage] = useState('Search for Music!')
 
   const API_URL = 'https://itunes.apple.com/search?term='
 
   useEffect(() => {
-    if (search) {
+    if (searchTerm) {
+      document.title=`${searchTerm} Music`
       const fetchData = async () => {
-        document.title = `${search} music`
-        const response = await fetch(API_URL + search)
+        const response = await fetch(API_URL + searchTerm)
         const resData = await response.json()
-        if (resData.results.length > 0) {
+        if(resData.results.length > 0) {
           setData(resData.results)
         } else {
-          setMessage('Not found')
+          setMessage('Not Found')
         }
       }
       fetchData()
-    }
-  }, [search])
+  }
+  }, [searchTerm])
 
   const handleSearch = (e, term) => {
     e.preventDefault()
-    setSearch(term)
+    setSearchTerm(term)
   }
+
   return (
     <div className="App">
+      <SearchBar handleSearch={handleSearch} />
       {message}
-      <Router>
-        <Routes>
-          <Route path='/' element={
-               <Fragment>
-                  <SearchBar handleSearch={handleSearch} />
-                  <Gallery data={data} />
-               </Fragment>
-          } />
-          <Route path='/album/:id' element={<AlbumView />}></Route>
-          <Route path='/artist/:id' element={<ArtistView />} ></Route>
-        </Routes>
-      </Router>
+      <Gallery data={data} />
     </div>
   );
 }
